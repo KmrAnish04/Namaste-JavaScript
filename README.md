@@ -1,0 +1,2 @@
+# Namaste-JavaScript
+Learning JavaScript
