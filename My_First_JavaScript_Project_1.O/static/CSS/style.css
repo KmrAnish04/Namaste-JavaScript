@@ -1,0 +1,42 @@
+body{
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+
+}
+
+.container-1{
+    margin: auto;
+    width: 75%;
+    border: 2px solid black;
+    text-align: center;
+    align-content: center;
+}
+
+.button-div{
+    border: 1px solid black;
+}
+
+.btn{
+    margin: 10px;
+    padding: 10px;
+    
+}
+
+.btn-primary{
+    background-color: green;
+    color: white;
+}
+
+.flexbox-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid blue;
+    justify-content: space-evenly;
+}
+
+.flexbox-container img{
+    border: 1px solid greenyellow;
+    margin: 5px;
+    box-shadow: 0px 10px 50px rgba(0, 0, 0, 7);
+}
