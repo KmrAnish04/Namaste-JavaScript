@@ -1,0 +1,40 @@
+body{
+    margin: 0;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.container-1{
+    border: 5px solid black;
+    text-align: center;
+    align-self: center;
+    width: 70%;
+    margin: auto;
+}
+
+.flexbox-container-1{
+    display: flex;
+    flex-direction: row;
+    border: 1px solid black;
+    padding: 10px;
+    flex-wrap: wrap;
+    justify-content: space-around;
+
+}
+
+.btn{
+    display: block;
+    color: white;
+    border: 1px solid black;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+.btn-primary{
+    background-color: green;
+}
+
+.btn-danger{
+    background-color: red;
+}
