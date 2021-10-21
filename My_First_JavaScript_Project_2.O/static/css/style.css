@@ -16,6 +16,10 @@ body{
     flex-direction: row;
     flex-wrap: wrap;
     justify-content: space-around;
-    border: 1px solid black;
+    border: 1px solid blue;
     padding: 20px;
+}
+
+.flexbox-container-1 img:hover{
+    box-shadow: 0px 10px 50px rgba(37, 50, 233, 1);
 }
