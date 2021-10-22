@@ -8,6 +8,9 @@ function rpsGame(userChoice){
     result = findWinner(playerChoice, botChoice);
     console.log(result);
 
+    message = declareWinner(result);
+    console.log(message);
+
 }
 
 function randToBotChoice() {
@@ -30,4 +33,16 @@ function findWinner(playerChoice, botChoice) {
     var botScore = rpsDb[botChoice][playerChoice];
 
     return [playerScore, botScore];
+}
+
+function declareWinner([playerChoice, botChoice]) {
+    if (playerChoice == 0) {
+        return {'message': 'You Lost!', 'color': 'red'};
+    }
+    else if(playerChoice == 0.5){
+        return {'message': 'Game Tied!', 'color': 'yellow'};
+    }
+    else{
+        return {'message': 'You Won!', 'color': 'green'};
+    }
 }
