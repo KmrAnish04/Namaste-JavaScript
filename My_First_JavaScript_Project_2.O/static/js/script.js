@@ -1,8 +1,12 @@
 function rpsGame(userChoice){
-    var playerChoice, botChoice;
+    var playerChoice, botChoice, result;
 
-    botChoice = numToBotChoice(randToBotChoice())
-    console.log(botChoice);
+    playerChoice = userChoice.id;
+    botChoice = numToBotChoice(randToBotChoice());
+    console.log("Bot Choice: ", botChoice);
+    console.log("Player Choice: ", playerChoice);
+    result = findWinner(playerChoice, botChoice);
+    console.log(result);
 
 }
 
@@ -13,4 +17,17 @@ function randToBotChoice() {
 function numToBotChoice(num) {
     var botChoices = ['rock', 'paper', 'scissor'];
     return botChoices[num]; 
+}
+
+function findWinner(playerChoice, botChoice) {
+    var rpsDb = {
+        'rock': {'rock': 0.5, 'paper': 0, 'scissor': 1},
+        'paper': {'rock': 1, 'paper': 0.5, 'scissor': 0},
+        'scissor': {'rock': 0, 'paper': 1, 'scissor': 0.5},
+    };
+    
+    var playerScore = rpsDb[playerChoice][botChoice];
+    var botScore = rpsDb[botChoice][playerChoice];
+
+    return [playerScore, botScore];
 }
