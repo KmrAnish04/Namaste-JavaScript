@@ -77,3 +77,5 @@ function fontendStuff(playerChoiceImg, botChoiceImg, resultMsg) {
     document.getElementById('flexbox-rps').appendChild(messageDiv);
     document.getElementById('flexbox-rps').appendChild(botDiv);
 }
+
+
