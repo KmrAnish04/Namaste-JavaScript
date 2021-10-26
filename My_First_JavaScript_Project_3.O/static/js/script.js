@@ -1,3 +1,4 @@
+
 var allButtons = document.getElementsByTagName('button');
 // console.log('buttons =', allButtons); 
 
@@ -59,3 +60,4 @@ function resetColors() {
         allButtons[i].classList.add(copyAllButtons[i]);  
     }
 }
+
