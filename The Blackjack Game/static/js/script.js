@@ -11,24 +11,19 @@ const DEALER = gameResult['dealer'];
 
 const hitSound = new Audio('static/sounds/swish.m4a');
 
-document.querySelector('#hit').addEventListener('click', bjHit);
-document.querySelector('#deal').addEventListener('click', bjDeal);
+document.querySelector('#hit').addEventListener('click', BlackjackHit);
+document.querySelector('#stand').addEventListener('click', BlackjackStand);
+document.querySelector('#deal').addEventListener('click', BlackjackDeal);
 
-function bjHit() {
+function BlackjackHit() {
     // showCards(DEALER);  
-    // showCards(YOU, pickRandomCards()); 
-    updatecardsScore(pickRandomCards(), YOU); 
+    let cardpicked = pickRandomCards();
+    showCards(YOU, cardpicked); 
+    updateCardsScore(cardpicked, YOU);
+    updateScoreFrontend(YOU);
 }
 
-function showCards(activePlayer, cardToBeShown) {
-    let cardImg = document.createElement('img');
-    cardImg.src = `static/images/${cardToBeShown}.png`;
-    cardImg.setAttribute('style', 'width: 90px; height: 120px; margin:5px')
-    document.querySelector(activePlayer['div']).appendChild(cardImg);
-    hitSound.play();
-}
-
-function bjDeal() {
+function BlackjackDeal() {
     let playerImgs = document.querySelector('#player-div').querySelectorAll('img');
     let dealerImgs = document.querySelector('#dealer-div').querySelectorAll('img');
     
@@ -38,7 +33,33 @@ function bjDeal() {
     for (let i = 0; i < dealerImgs.length; i++) {
         dealerImgs[i].remove();        
     }
+
+    YOU['score'] = 0;
+    DEALER['score'] = 0;
+    document.querySelector(YOU['scoreSpan']).textContent = 0;
+    document.querySelector(YOU['scoreSpan']).style.color = 'white';
+    document.querySelector(DEALER['scoreSpan']).textContent = 0;
+    document.querySelector(DEALER['scoreSpan']).style.color = 'white';
 }
+
+function BlackjackStand() {
+    let dealerCard = pickRandomCards();
+    showCards(DEALER, dealerCard);
+    updateCardsScore(dealerCard, DEALER);
+    updateScoreFrontend(DEALER);
+}
+
+
+function showCards(activePlayer, cardToBeShown) {
+    if (activePlayer['score'] <= 21) {
+        let cardImg = document.createElement('img');
+        cardImg.src = `static/images/${cardToBeShown}.png`;
+        cardImg.setAttribute('style', 'width: 90px; height: 120px; margin:5px')
+        document.querySelector(activePlayer['div']).appendChild(cardImg);
+        hitSound.play();
+    }
+}
+
 
 function pickRandomCards() {
     let card = gameResult['cards'][Math.floor(Math.random() * 13)];
@@ -46,7 +67,28 @@ function pickRandomCards() {
     return card;
 }
 
-function updatecardsScore(card, activePlayer) {
-    let cardScore = gameResult['cardsScores'].card;
-    console.log(cardScore);
+function updateCardsScore(card, activePlayer) {
+    if (card === 'A') {
+        if (activePlayer['score'] + gameResult['cardsScores'][card][1] <= 21) {
+            activePlayer['score'] += gameResult['cardsScores'][card][1];
+        }
+        else{
+            activePlayer['score'] += gameResult['cardsScores'][card][0];
+        }
+    }
+    else{ 
+        activePlayer['score'] += gameResult['cardsScores'][card];
+        console.log(card, activePlayer['score']);
+    }
+}
+
+function updateScoreFrontend(activePlayer) {
+    if (activePlayer['score'] > 21) {
+        document.querySelector(activePlayer['scoreSpan']).textContent = 'Bust';
+        document.querySelector(activePlayer['scoreSpan']).style.color = 'red';
+    }
+    else{
+        document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
+    }
+
 }
