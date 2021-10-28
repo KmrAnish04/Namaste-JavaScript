@@ -10,6 +10,8 @@ const YOU = gameResult['player'];
 const DEALER = gameResult['dealer'];
 
 const hitSound = new Audio('static/sounds/swish.m4a');
+const winSound = new Audio('static/sounds/cash.mp3');
+const lossSound = new Audio('static/sounds/aww.mp3');
 
 document.querySelector('#hit').addEventListener('click', BlackjackHit);
 document.querySelector('#stand').addEventListener('click', BlackjackStand);
@@ -24,6 +26,7 @@ function BlackjackHit() {
 }
 
 function BlackjackDeal() {
+    showResults(decideWinner());
     let playerImgs = document.querySelector('#player-div').querySelectorAll('img');
     let dealerImgs = document.querySelector('#dealer-div').querySelectorAll('img');
     
@@ -91,4 +94,55 @@ function updateScoreFrontend(activePlayer) {
         document.querySelector(activePlayer['scoreSpan']).textContent = activePlayer['score'];
     }
 
+}
+
+function decideWinner() {
+    let winner;
+    if (YOU['score'] <= 21) {
+        if ( (YOU['score'] > DEALER['score']) || (DEALER['score'] > 21)) {
+            winner = YOU;
+            console.log('You win!');
+        }
+        else if(YOU['score'] < DEALER['score']){
+            winner = DEALER;
+            console.log('Dealer win!')
+        }
+        else if(YOU['score'] === DEALER['score']){
+            winner = 'Draw';
+            console.log('Game Drew!');
+        }
+    }
+    else if(YOU['score'] > 21 && DEALER['score'] <= 21){
+        winner = DEALER;
+        console.log('Dealer Wins!');
+    }
+    else if(YOU['score'] > 21 && DEALER['score'] > 21){
+        winner = 'Draw';
+        console.log('Game Draw!');
+    }
+
+    console.log('winner is ', winner);
+    return winner;
+}
+
+function showResults(winner) {
+    let message, messageColor;
+
+    if (winner === YOU) {
+        message = 'You Won! 🥳';
+        messageColor = 'green';
+        winSound.play();
+    }
+    else if (winner === DEALER) {
+        message = 'You Lost! 😥';
+        messageColor = 'red';
+        lossSound.play();
+    }
+    else{
+        message = 'Game Drew! 🙅‍♂️';
+        messageColor = '#ebab34';
+    }
+
+    document.querySelector('#game-result').textContent = message;
+    document.querySelector('#game-result').style.color = messageColor;
 }
