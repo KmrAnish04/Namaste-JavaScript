@@ -62,21 +62,26 @@ function BlackjackDeal() {
     }
 }
 
-function BlackjackStand() {
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function BlackjackStand() {
     if (gameResult['turnsOver'] === false) {
         
         gameResult['isStand'] = true;
-        let dealerCard = pickRandomCards();
-        showCards(DEALER, dealerCard);
-        updateCardsScore(dealerCard, DEALER);
-        updateScoreFrontend(DEALER);
-    
-        if (DEALER['score']>15) {
-            gameResult['turnsOver'] = true;
-            let winner = decideWinner();
-            showResults(winner);
+        while (DEALER['score'] < 16 && gameResult['isStand'] === true) {
+            
+            let dealerCard = pickRandomCards();
+            showCards(DEALER, dealerCard);
+            updateCardsScore(dealerCard, DEALER);
+            updateScoreFrontend(DEALER);
+            await sleep(1000);
         }
-
+        
+        gameResult['turnsOver'] = true;
+        let winner = decideWinner();
+        showResults(winner);        
     }
 
 }
